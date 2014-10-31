@@ -8,7 +8,13 @@ RUN echo "deb http://dl.google.com/linux/musicmanager/deb/ stable main" >> /etc/
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get -y update
-RUN apt-get install -y google-musicmanager-beta xvfb x11vnc supervisor
+RUN apt-get install -y google-musicmanager-beta xvfb supervisor
+
+RUN apt-get install -y build-essential libxtst-dev libssl-dev libjpeg-dev checkinstall
+RUN wget http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz
+RUN gzip -dc x11vnc-0.9.14-dev.tar.gz | tar -xvf -
+RUN cd x11vnc-0.9.14 && ./configure && make && \
+  checkinstall --pkgname=x11vnc --default --pkgversion="2:0.9.14-0.1" --backup=no --deldoc=yes
 
 RUN mkdir /music
 VOLUME /music
