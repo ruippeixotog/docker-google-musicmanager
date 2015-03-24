@@ -2,12 +2,7 @@
 
 This repository contains the Dockerfile for `ruippeixotog/google-musicmanager`, a Docker image containing Google Music Manager - the application which allows uploading of local music files for use with the Google Play Music service.
 
-At the time of writing, there is no way to run the application as a headless service. The image relies on the method described [here](http://superuser.com/questions/429153/using-google-music-manager-in-linux-from-the-command-line), which involves launching a lightweight X11 display server ([Xvfb](http://en.wikipedia.org/wiki/Xvfb)) and a VNC server ([x11vnc](http://www.karlrunge.com/x11vnc/)). Moreover, the app imposes some restrictions on VM-like network environments:
-
-* The container has to be started with the `--net=host` option, which makes the Docker image use the host's network stack instead of the default Docker bridge;
-* Running the container inside a VM such as boot2docker won't work.
-
-Failing to meet these requirements will lead to [this error message](https://support.google.com/googleplay/answer/1308383) in the GUI.
+At the time of writing, there is no way to run the application as a headless service. The image relies on the method described [here](http://superuser.com/questions/429153/using-google-music-manager-in-linux-from-the-command-line), which involves launching a lightweight X11 display server ([Xvfb](http://en.wikipedia.org/wiki/Xvfb)) and a VNC server ([x11vnc](http://www.karlrunge.com/x11vnc/)).
 
 ## How to run
 
@@ -16,7 +11,7 @@ There are two ways to pass the required Google account credentials to this image
 The credentials can be passed through environment variables by running a container with:
 
 ```
-docker run -dt --net=host -v /music:/music -v /appdata:/appdata \
+docker run -dt -v /music:/music -v /appdata:/appdata \
   -e SERVER_NAME=some_name -e GOOGLE_USER=my_username -e GOOGLE_PASS=my_password \
   ruippeixotog/google-musicmanager
 ```
@@ -24,7 +19,7 @@ docker run -dt --net=host -v /music:/music -v /appdata:/appdata \
 Using environment variables won't work if the Google account has two-step authentication enabled. If that is the case or if writing passwords in plain text is not desirable, the container can be run instead with:
 
 ```
-docker run -dt --net=host -v /music:/music -v /appdata:/appdata \
+docker run -dt -v /music:/music -v /appdata:/appdata \
   -e SERVER_NAME=some_name -p 5900:5900 \
   ruippeixotog/google-musicmanager
 ```
