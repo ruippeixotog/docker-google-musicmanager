@@ -18,7 +18,8 @@ RUN apt-get install -y google-musicmanager-beta xvfb x11vnc supervisor
 RUN mkdir /music
 VOLUME /music
 
-RUN mkdir -p /appdata /root/.config
+RUN mkdir -p /appdata /.config /root/.config
+RUN ln -s /appdata /.config/google-musicmanager
 RUN ln -s /appdata /root/.config/google-musicmanager
 VOLUME /appdata
 
