@@ -4,7 +4,11 @@ export DISPLAY=:2
 SERVER_NAME=${SERVER_NAME-default}
 
 function google-musicmanager {
-  /usr/local/bin/macspoof -c 'default_application: [0x00, 0x25, 0x90];' -- /usr/bin/google-musicmanager "$@"
+  if [[ $SPOOF_MAC == "false" ]]; then
+    /usr/bin/google-musicmanager "$@"
+  else
+    /usr/local/bin/macspoof -c 'default_application: [0x00, 0x25, 0x90];' -- /usr/bin/google-musicmanager "$@"
+  fi
 }
 
 if [ -n "$GOOGLE_USER" ]; then
