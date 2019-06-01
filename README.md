@@ -4,6 +4,8 @@ This repository contains the Dockerfile for `ruippeixotog/google-musicmanager`, 
 
 At the time of writing, there is no way to run the application as a headless service. The image relies on the method described [here](http://superuser.com/questions/429153/using-google-music-manager-in-linux-from-the-command-line), which involves launching a lightweight X11 display server ([Xvfb](http://en.wikipedia.org/wiki/Xvfb)) and a VNC server ([x11vnc](http://www.karlrunge.com/x11vnc/)).
 
+***Please note**: This method worked for me for a long time in the past, but I'm aware of its lack of reliability and reproducibility. I do not have the necessary expertise to debug Google connection or authentication problems here. Google Music Manager was never meant to be run headless and there is no documentation whatsoever, so while I shared this image with the community, unfortunately I can't provide support for it. Feel free to send pull requests if you have a fix.*
+
 ## How to run
 
 There are two ways to pass the required Google account credentials to this image.
